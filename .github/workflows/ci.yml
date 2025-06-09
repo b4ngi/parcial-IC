@@ -1,0 +1,33 @@
+name: Node.js CI/CD
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
+
+      - name: Notificar a Slack
+        if: always()
+        run: |
+          powershell -Command ^
+            "$payload = @{ text = 'Resultado CI: $env:GITHUB_JOB en $env:GITHUB_REPOSITORY. Status: $env:GITHUB_WORKFLOW $env:GITHUB_RUN_NUMBER' } | ConvertTo-Json; ^
+             Invoke-RestMethod -Uri $env:SLACK_WEBHOOK_URL -Method Post -Body $payload -ContentType 'application/json'"
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
