@@ -26,20 +26,26 @@ jobs:
 
       - name: Enviar Retroalimentación a Slack (Éxito)
         if: success()
-        uses: rtCamp/action-slack-notify@v2
-        with: 
-          status: success
-          message: "✅ Build y Tests para la rama ${{ github.ref_name }} han PASADO exitosamente."
-          channel: '#general-parcial-ic'
-          username: 'GitHub Actions CI'
-          webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+          payload: |
+            {
+              "text": "✅ Build y Tests para la rama ${{ github.ref_name }} han PASADO exitosamente.",
+              "username": "GitHub Actions CI",
+              "channel": "#general-parcial-ic"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
       - name: Enviar Retroalimentación a Slack (Fallo)
         if: failure()
-        uses: rtCamp/action-slack-notify@v2
+        uses: slackapi/slack-github-action@v1.23.0
         with:
-          status: failure
-          message: "❌ Build y Tests para la rama ${{ github.ref_name }} han FALLADO. Ver logs de GitHub Actions."
-          channel: '#general-parcial-ic'
-          username: 'GitHub Actions CI'
-          webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+          payload: |
+            {
+              "text": "❌ Build y Tests para la rama ${{ github.ref_name }} han FALLADO. Ver logs de GitHub Actions.",
+              "username": "GitHub Actions CI",
+              "channel": "#general-parcial-ic"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
