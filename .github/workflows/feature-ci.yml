@@ -24,20 +24,22 @@ jobs:
       - name: Ejecutar pruebas
         run: npm test
 
-      - name: Retroalimentacion a slack (exito)
+      - name: Enviar Retroalimentación a Slack (Éxito)
         if: success()
         uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_MESSAGE: "Tests para la rama ${{ github.ref_name }} han pasado exitosamente."
-          SLACK_USERNAME: 'GitHub Actions CI'
-          SLACK_CHANNEL: '#general-parcial-ic'
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+        with: 
+          status: success
+          message: "✅ Build y Tests para la rama ${{ github.ref_name }} han PASADO exitosamente."
+          channel: '#general-parcial-ic'
+          username: 'GitHub Actions CI'
+          webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-      - name: Retroalimentacion a slack (fallo)
+      - name: Enviar Retroalimentación a Slack (Fallo)
         if: failure()
         uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_MESSAGE: "Tests para la rama ${{ github.ref_name }} han FALLADO. Ver logs de GitHub Actions."
-          SLACK_USERNAME: 'GitHub Actions CI'
-          SLACK_CHANNEL: '#general-parcial-ic'
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+        with:
+          status: failure
+          message: "❌ Build y Tests para la rama ${{ github.ref_name }} han FALLADO. Ver logs de GitHub Actions."
+          channel: '#general-parcial-ic'
+          username: 'GitHub Actions CI'
+          webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
