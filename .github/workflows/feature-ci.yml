@@ -1,0 +1,43 @@
+name: Integracion Continua en ramas de Features
+
+on:
+  push:
+    branches:
+      - 'feature/**'
+
+jobs:
+  build-and-test:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout del codigo
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Ejecutar pruebas
+        run: npm test
+
+      - name: Retroalimentacion a slack (exito)
+        if: success()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_MESSAGE: "✅ Build y Tests para la rama ${{ github.ref_name }} han pasado exitosamente."
+          SLACK_USERNAME: 'GitHub Actions CI'
+          SLACK_CHANNEL: '#general-parcial-ic'
+
+      - name: Retroalimentacion a slack (fallo)
+        if: failure()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_MESSAGE: "❌ Build y Tests para la rama ${{ github.ref_name }} han FALLADO. Ver logs de GitHub Actions."
+          SLACK_USERNAME: 'GitHub Actions CI'
+          SLACK_CHANNEL: '#general-parcial-ic'
