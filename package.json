@@ -4,14 +4,17 @@
   "description": "Parcial de Integración Continua",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "build": "echo Build de la aplicación... && mkdir dist && copy index.js dist\\",
-    "deploy-local": "echo Desplegando localmente... && npm run build && echo Aplicación lista en dist\\"
+    "start": "node app.js",
+    "test": "jest"
+  },
+    "dependencies": {
+    "express": "^4.18.2"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "jest": "^29.7.0"
+    "jest": "^29.7.0",
+    "supertest": "^6.3.0"
   }
 }

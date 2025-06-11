@@ -33,7 +33,7 @@ jobs:
         with:
           payload: |
             {
-              "text": "🚀 Desplegado exitosamente en Render. Commit: ${{ github.sha }}",
+              "text": "🚀 Desplegado exitosamente en Render.",
               "username": "GitHub Actions CD",
               "channel": "#general-parcial-ic"
             }
@@ -46,7 +46,7 @@ jobs:
         with:
           payload: |
             {
-              "text": "🚨 Fallo en el despliegue a producción. Ver logs de GitHub Actions. Commit: ${{ github.sha }}",
+              "text": "🚨 Fallo en el despliegue a producción. Ver logs de GitHub Actions.",
               "username": "GitHub Actions CD",
               "channel": "#general-parcial-ic"
             }
