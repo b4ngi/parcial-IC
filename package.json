@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "build": "react-scripts build"
+    "build": "echo Build de la aplicación... && mkdir dist && copy index.js dist\\",
+    "deploy-local": "echo Desplegando localmente... && npm run build && echo Aplicación lista en dist\\"
   },
   "keywords": [],
   "author": "",
