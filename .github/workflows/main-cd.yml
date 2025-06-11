@@ -1,0 +1,54 @@
+name: Despliegue a produccion
+
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  deploy:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout del codigo
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Preparar Build de Producción
+        run: npm run build
+
+      - name: Ejecutar pruebas
+        run: npm test
+
+      - name: Enviar Notificación a Slack (Despliegue Exitoso)
+        if: success()
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+          payload: |
+            {
+              "text": "🚀 Desplegado exitosamente en Render. Commit: ${{ github.sha }}",
+              "username": "GitHub Actions CD",
+              "channel": "#general-parcial-ic"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: Enviar Notificación a Slack (Fallo de Despliegue)
+        if: failure()
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+          payload: |
+            {
+              "text": "🚨 Fallo en el despliegue a producción. Ver logs de GitHub Actions. Commit: ${{ github.sha }}",
+              "username": "GitHub Actions CD",
+              "channel": "#general-parcial-ic"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
