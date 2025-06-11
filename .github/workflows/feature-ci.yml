@@ -6,7 +6,7 @@ on:
       - 'feature/**'
 
 jobs:
-  build-and-test:
+  tests:
     runs-on: windows-latest
 
     steps:
@@ -30,7 +30,7 @@ jobs:
         with:
           payload: |
             {
-              "text": "✅ Build y Tests para la rama ${{ github.ref_name }} han PASADO exitosamente.",
+              "text": "✅ Los Tests para la rama ${{ github.ref_name }} han PASADO exitosamente.",
               "username": "GitHub Actions CI",
               "channel": "#general-parcial-ic"
             }
@@ -43,7 +43,7 @@ jobs:
         with:
           payload: |
             {
-              "text": "❌ Build y Tests para la rama ${{ github.ref_name }} han FALLADO. Ver logs de GitHub Actions.",
+              "text": "❌ Los Tests para la rama ${{ github.ref_name }} han FALLADO. Ver logs de GitHub Actions.",
               "username": "GitHub Actions CI",
               "channel": "#general-parcial-ic"
             }
