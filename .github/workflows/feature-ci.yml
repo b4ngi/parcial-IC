@@ -28,9 +28,8 @@ jobs:
         if: success()
         uses: slackapi/slack-github-action@v1.23.0
         with:
-          payload: >
+          payload: |
             {
-              "text": "✅ Los tests pasaron exitosamente en `${{ github.ref_name }}`",
               "blocks": [
                 {
                   "type": "section",
@@ -41,10 +40,24 @@ jobs:
                 },
                 {
                   "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "*Autor:* ${{ github.actor }}\n*Commit:* <https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>\n*Workflow:* `${{ github.workflow }}`\n*Ver ejecución:* <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Ver en GitHub Actions>"
-                  }
+                  "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Autor:*\n${{ github.actor }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Commit:*\n<https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Workflow:*\n${{ github.workflow }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Ver ejecución:*\n<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Ver en GitHub Actions>"
+                    }
+                  ]
                 }
               ]
             }
@@ -55,9 +68,8 @@ jobs:
         if: failure()
         uses: slackapi/slack-github-action@v1.23.0
         with:
-          payload: >
+          payload: |
             {
-              "text": "❌ Los tests fallaron en `${{ github.ref_name }}`",
               "blocks": [
                 {
                   "type": "section",
@@ -68,10 +80,24 @@ jobs:
                 },
                 {
                   "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "*Autor:* ${{ github.actor }}\n*Commit:* <https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>\n*Workflow:* `${{ github.workflow }}`\n*Ver ejecución:* <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Ver en GitHub Actions>"
-                  }
+                  "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Autor:*\n${{ github.actor }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Commit:*\n<https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Workflow:*\n${{ github.workflow }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Ver ejecución:*\n<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Ver en GitHub Actions>"
+                    }
+                  ]
                 }
               ]
             }
