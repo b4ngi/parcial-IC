@@ -18,6 +18,14 @@ jobs:
         with:
           node-version: 20
 
+      - name: Cachear dependencias de npm
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
       - name: Instalar dependencias
         run: npm ci
 
@@ -30,37 +38,9 @@ jobs:
         with:
           payload: |
             {
-              "text": "✅ Los tests pasaron exitosamente en `${{ github.ref_name }}`",
-              "blocks": [
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": ":white_check_mark: *Tests pasaron exitosamente en `${{ github.ref_name }}`*"
-                  }
-                },
-                {
-                  "type": "section",
-                  "fields": [
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Autor:*\n${{ github.actor }}"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Commit:*\n<https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Workflow:*\n`${{ github.workflow }}`"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Ver ejecución:*\n<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Ver en GitHub Actions>"
-                    }
-                  ]
-                }
-              ]
+              "text": "✅ Los Tests para la rama `${{ github.ref_name }}` han PASADO exitosamente.\n\n*Autor del commit:* ${{ github.actor }}\n*Commit:* <https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>\n*Ver ejecución:* <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|GitHub Actions>",
+              "username": "GitHub Actions CI",
+              "channel": "#general-parcial-ic"
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_1 }}
@@ -71,37 +51,9 @@ jobs:
         with:
           payload: |
             {
-              "text": "❌ Los tests fallaron en `${{ github.ref_name }}`",
-              "blocks": [
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": ":x: *Tests fallaron en `${{ github.ref_name }}`*"
-                  }
-                },
-                {
-                  "type": "section",
-                  "fields": [
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Autor:*\n${{ github.actor }}"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Commit:*\n<https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Workflow:*\n`${{ github.workflow }}`"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Ver ejecución:*\n<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Ver en GitHub Actions>"
-                    }
-                  ]
-                }
-              ]
+              "text": "❌ Los Tests para la rama `${{ github.ref_name }}` han FALLADO.\n\n*Autor del commit:* ${{ github.actor }}\n*Commit:* <https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>\n*Ver ejecución:* <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|GitHub Actions>",
+              "username": "GitHub Actions CI",
+              "channel": "#general-parcial-ic"
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_1 }}

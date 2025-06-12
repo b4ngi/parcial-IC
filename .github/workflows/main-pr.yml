@@ -19,6 +19,14 @@ jobs:
         with:
           node-version: 20
 
+      - name: Cachear dependencias de npm
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
       - name: Instalar dependencias
         run: npm ci
 
@@ -30,40 +38,9 @@ jobs:
         with:
           payload: |
             {
-              "text": "🔃 *Nueva solicitud de Pull Request*",
-              "attachments": [
-                {
-                  "color": "#439FE0",
-                  "mrkdwn_in": ["text", "fields"],
-                  "fields": [
-                    {
-                      "title": "Autor",
-                      "value": "${{ github.actor }}",
-                      "short": true
-                    },
-                    {
-                      "title": "Desde",
-                      "value": "${{ github.head_ref || github.event.pull_request.head.ref }}",
-                      "short": true
-                    },
-                    {
-                      "title": "Hacia",
-                      "value": "${{ github.base_ref || github.event.pull_request.base.ref }}",
-                      "short": true
-                    },
-                    {
-                      "title": "Título del PR",
-                      "value": "${{ github.event.pull_request.title }}",
-                      "short": false
-                    },
-                    {
-                      "title": "Ver Pull Request",
-                      "value": "<${{ github.event.pull_request.html_url }}|Ir al Pull Request>",
-                      "short": false
-                    }
-                  ]
-                }
-              ]
+              "text": "*Nueva solicitud de Pull Request*\n\n*Autor:* ${{ github.actor }}\n*Desde:* `${{ github.head_ref }}` → `${{ github.base_ref }}`\n*Repositorio:* ${{ github.repository }}\n*Ver PR:* <${{ github.event.pull_request.html_url }}|Click aquí para verlo>",
+              "username": "GitHub Actions CD",
+              "channel": "#notificaciones-pr"
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_2 }}
