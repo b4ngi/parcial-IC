@@ -24,82 +24,23 @@ jobs:
       - name: Ejecutar pruebas
         run: npm test
 
-      - name: Enviar Retroalimentación a Slack (Éxito)
-        if: success()
-        uses: slackapi/slack-github-action@v1.23.0
-        with:
-          payload: |
-            {
-              "blocks": [
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": ":white_check_mark: *Tests pasaron exitosamente en `${{ github.ref_name }}`*"
-                  }
-                },
-                {
-                  "type": "section",
-                  "fields": [
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Autor:*\n${{ github.actor }}"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Commit:*\n<https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Workflow:*\n${{ github.workflow }}"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Ver ejecución:*\n<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Ver en GitHub Actions>"
-                    }
-                  ]
-                }
-              ]
-            }
+      - name: Notificacion Slack
+        if: always()
+        uses: rtCamp/action-slack-notify@v2
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_1 }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL_1 }}
+          SLACK_CHANNEL: notificaciones-features
+          SLACK_COLOR: ${{ job.status }}
+          MSG_MINIMAL: actions url
 
-      - name: Enviar Retroalimentación a Slack (Fallo)
-        if: failure()
-        uses: slackapi/slack-github-action@v1.23.0
-        with:
-          payload: |
-            {
-              "blocks": [
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": ":x: *Tests fallaron en `${{ github.ref_name }}`*"
-                  }
-                },
-                {
-                  "type": "section",
-                  "fields": [
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Autor:*\n${{ github.actor }}"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Commit:*\n<https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Workflow:*\n${{ github.workflow }}"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Ver ejecución:*\n<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Ver en GitHub Actions>"
-                    }
-                  ]
-                }
-              ]
-            }
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_1 }}
+          SLACK_MESSAGE: |
+            *${{ job.status == 'success' && ':white_check_mark: Tests pasaron exitosamente' || ':x: Tests fallaron' }} en `${{ github.ref_name }}`*
+
+            *Autor:* `${{ github.actor }}`
+            *Commit:* <https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>
+            *Workflow:* `${{ github.workflow }}`
+            *Ver ejecución:* <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Ver en GitHub Actions>
+
+          SLACK_MESSAGE_ON_SUCCESS: ''
+          SLACK_MESSAGE_ON_FAILURE: ''
+          SLACK_MESSAGE_ON_CANCEL: 'Job cancelado :warning:'
