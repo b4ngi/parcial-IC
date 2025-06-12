@@ -36,7 +36,7 @@ jobs:
         with:
           payload: |
             {
-              "text": "🚀 Entrega continua completada, listo para desplegar en Render desde la rama `${{ github.ref_name }}`.\n\n*Autor del commit:* ${{ github.actor }}\n*Commit:* <https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>\n*Ver ejecución:* <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|GitHub Actions>",
+              "text": "🚀 Entrega continua completada y despliegue activado en Render en la rama `${{ github.ref_name }}`.\n\n*Autor del commit:* ${{ github.actor }}\n*Commit:* <https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>\n*Ver ejecución:* <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|GitHub Actions\n*App desplegada en:* <https://parcial-ic.onrender.com|https://parcial-ic.onrender.com>>",
               "username": "GitHub Actions CD",
               "channel": "#notificaciones-despliegue"
             }
