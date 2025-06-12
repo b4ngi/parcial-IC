@@ -34,6 +34,7 @@ jobs:
               "attachments": [
                 {
                   "color": "#2eb886",
+                  "mrkdwn_in": ["text", "fields"],
                   "fields": [
                     {
                       "title": "Autor del merge",
@@ -72,6 +73,7 @@ jobs:
               "attachments": [
                 {
                   "color": "#e01e5a",
+                  "mrkdwn_in": ["text", "fields"],
                   "fields": [
                     {
                       "title": "Autor del merge",

@@ -34,6 +34,7 @@ jobs:
               "attachments": [
                 {
                   "color": "good",
+                  "mrkdwn_in": ["text", "fields"],
                   "fields": [
                     {
                       "title": "Autor",
@@ -72,6 +73,7 @@ jobs:
               "attachments": [
                 {
                   "color": "danger",
+                  "mrkdwn_in": ["text", "fields"],
                   "fields": [
                     {
                       "title": "Autor",

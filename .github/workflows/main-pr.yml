@@ -34,6 +34,7 @@ jobs:
               "attachments": [
                 {
                   "color": "#439FE0",
+                  "mrkdwn_in": ["text", "fields"],
                   "fields": [
                     {
                       "title": "Autor",
