@@ -20,7 +20,19 @@ jobs:
           node-version: 20
 
       - name: Instalar dependencias
-        run: npm install
+        run: npm ci
 
       - name: Ejecutar pruebas
         run: npm test
+
+      - name: Enviar Notificación a Slack (Nueva solicitud de PR)
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+          payload: |
+            {
+              "text": "Nueva solicitud de Pull Request",
+              "username": "GitHub Actions CD",
+              "channel": "#general-parcial-ic"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_2 }}
