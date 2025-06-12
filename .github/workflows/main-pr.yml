@@ -22,7 +22,7 @@ jobs:
       - name: Cachear dependencias de npm
         uses: actions/cache@v3
         with:
-          path: ~/.npm
+          path: ${{ runner.os == 'Windows' && 'C:\\Users\\runneradmin\\AppData\\Roaming\\npm-cache' || '~/.npm' }}
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
