@@ -30,31 +30,33 @@ jobs:
         with:
           payload: |
             {
-              "text": "✅ *Los tests pasaron exitosamente en `${{ github.ref_name }}`*",
-              "attachments": [
+              "text": "✅ Los tests pasaron exitosamente en ${{ github.ref_name }}",
+              "blocks": [
                 {
-                  "color": "good",
-                  "mrkdwn_in": ["text", "fields"],
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": ":white_check_mark: *Los tests pasaron exitosamente en `${{ github.ref_name }}`*"
+                  }
+                },
+                {
+                  "type": "section",
                   "fields": [
                     {
-                      "title": "Autor",
-                      "value": "${{ github.actor }}",
-                      "short": true
+                      "type": "mrkdwn",
+                      "text": "*Autor:*\n${{ github.actor }}"
                     },
                     {
-                      "title": "Commit",
-                      "value": "<https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>",
-                      "short": true
+                      "type": "mrkdwn",
+                      "text": "*Commit:*\n<https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>"
                     },
                     {
-                      "title": "Workflow",
-                      "value": "${{ github.workflow }}",
-                      "short": true
+                      "type": "mrkdwn",
+                      "text": "*Workflow:*\n${{ github.workflow }}"
                     },
                     {
-                      "title": "Ver ejecución",
-                      "value": "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Ver en GitHub Actions>",
-                      "short": false
+                      "type": "mrkdwn",
+                      "text": "*Ver ejecución:*\n<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Ver en GitHub Actions>"
                     }
                   ]
                 }
@@ -69,31 +71,33 @@ jobs:
         with:
           payload: |
             {
-              "text": "❌ *Los tests fallaron en `${{ github.ref_name }}`*",
-              "attachments": [
+              "text": "❌ Los tests fallaron en ${{ github.ref_name }}",
+              "blocks": [
                 {
-                  "color": "danger",
-                  "mrkdwn_in": ["text", "fields"],
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": ":x: *Los tests fallaron en `${{ github.ref_name }}`*"
+                  }
+                },
+                {
+                  "type": "section",
                   "fields": [
                     {
-                      "title": "Autor",
-                      "value": "${{ github.actor }}",
-                      "short": true
+                      "type": "mrkdwn",
+                      "text": "*Autor:*\n${{ github.actor }}"
                     },
                     {
-                      "title": "Commit",
-                      "value": "<https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>",
-                      "short": true
+                      "type": "mrkdwn",
+                      "text": "*Commit:*\n<https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>"
                     },
                     {
-                      "title": "Workflow",
-                      "value": "${{ github.workflow }}",
-                      "short": true
+                      "type": "mrkdwn",
+                      "text": "*Workflow:*\n${{ github.workflow }}"
                     },
                     {
-                      "title": "Ver ejecución",
-                      "value": "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Ver en GitHub Actions>",
-                      "short": false
+                      "type": "mrkdwn",
+                      "text": "*Ver ejecución:*\n<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Ver en GitHub Actions>"
                     }
                   ]
                 }
