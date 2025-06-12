@@ -30,13 +30,13 @@ jobs:
         with:
           payload: |
             {
-              "text": "✅ Los tests pasaron exitosamente en ${{ github.ref_name }}",
+              "text": "✅ Los tests pasaron exitosamente en `${{ github.ref_name }}`",
               "blocks": [
                 {
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": ":white_check_mark: *Los tests pasaron exitosamente en `${{ github.ref_name }}`*"
+                    "text": ":white_check_mark: *Tests pasaron exitosamente en `${{ github.ref_name }}`*"
                   }
                 },
                 {
@@ -52,7 +52,7 @@ jobs:
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "*Workflow:*\n${{ github.workflow }}"
+                      "text": "*Workflow:*\n`${{ github.workflow }}`"
                     },
                     {
                       "type": "mrkdwn",
@@ -71,13 +71,13 @@ jobs:
         with:
           payload: |
             {
-              "text": "❌ Los tests fallaron en ${{ github.ref_name }}",
+              "text": "❌ Los tests fallaron en `${{ github.ref_name }}`",
               "blocks": [
                 {
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": ":x: *Los tests fallaron en `${{ github.ref_name }}`*"
+                    "text": ":x: *Tests fallaron en `${{ github.ref_name }}`*"
                   }
                 },
                 {
@@ -93,7 +93,7 @@ jobs:
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "*Workflow:*\n${{ github.workflow }}"
+                      "text": "*Workflow:*\n`${{ github.workflow }}`"
                     },
                     {
                       "type": "mrkdwn",
