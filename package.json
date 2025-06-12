@@ -4,7 +4,7 @@
   "description": "Parcial de Integración Continua",
   "main": "index.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "node server.js",
     "test": "jest"
   },
     "dependencies": {
