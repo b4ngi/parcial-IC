@@ -8,7 +8,7 @@ on:
 
 jobs:
   tests:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout del codigo
@@ -18,14 +18,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-
-      - name: Cachear dependencias de npm
-        uses: actions/cache@v3
-        with:
-          path: ${{ runner.os == 'Windows' && 'C:\\Users\\runneradmin\\AppData\\Roaming\\npm-cache' || '~/.npm' }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
 
       - name: Instalar dependencias
         run: npm ci
