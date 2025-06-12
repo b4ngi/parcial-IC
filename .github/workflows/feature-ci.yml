@@ -30,9 +30,34 @@ jobs:
         with:
           payload: |
             {
-              "text": "✅ Los Tests para la rama ${{ github.ref_name }} han PASADO exitosamente.",
-              "username": "GitHub Actions CI",
-              "channel": "#general-parcial-ic"
+              "text": "✅ *Los tests pasaron exitosamente en `${{ github.ref_name }}`*",
+              "attachments": [
+                {
+                  "color": "good",
+                  "fields": [
+                    {
+                      "title": "Autor",
+                      "value": "${{ github.actor }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Commit",
+                      "value": "<https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>",
+                      "short": true
+                    },
+                    {
+                      "title": "Workflow",
+                      "value": "${{ github.workflow }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Ver ejecución",
+                      "value": "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Ver en GitHub Actions>",
+                      "short": false
+                    }
+                  ]
+                }
+              ]
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_1 }}
@@ -43,9 +68,34 @@ jobs:
         with:
           payload: |
             {
-              "text": "❌ Los Tests para la rama ${{ github.ref_name }} han FALLADO. Ver logs de GitHub Actions.",
-              "username": "GitHub Actions CI",
-              "channel": "#general-parcial-ic"
+              "text": "❌ *Los tests fallaron en `${{ github.ref_name }}`*",
+              "attachments": [
+                {
+                  "color": "danger",
+                  "fields": [
+                    {
+                      "title": "Autor",
+                      "value": "${{ github.actor }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Commit",
+                      "value": "<https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>",
+                      "short": true
+                    },
+                    {
+                      "title": "Workflow",
+                      "value": "${{ github.workflow }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Ver ejecución",
+                      "value": "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Ver en GitHub Actions>",
+                      "short": false
+                    }
+                  ]
+                }
+              ]
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_1 }}

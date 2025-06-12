@@ -30,9 +30,39 @@ jobs:
         with:
           payload: |
             {
-              "text": "Nueva solicitud de Pull Request",
-              "username": "GitHub Actions CD",
-              "channel": "#general-parcial-ic"
+              "text": "🔃 *Nueva solicitud de Pull Request*",
+              "attachments": [
+                {
+                  "color": "#439FE0",
+                  "fields": [
+                    {
+                      "title": "Autor",
+                      "value": "${{ github.actor }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Desde",
+                      "value": "${{ github.head_ref || github.event.pull_request.head.ref }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Hacia",
+                      "value": "${{ github.base_ref || github.event.pull_request.base.ref }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Título del PR",
+                      "value": "${{ github.event.pull_request.title }}",
+                      "short": false
+                    },
+                    {
+                      "title": "Ver Pull Request",
+                      "value": "<${{ github.event.pull_request.html_url }}|Ir al Pull Request>",
+                      "short": false
+                    }
+                  ]
+                }
+              ]
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_2 }}

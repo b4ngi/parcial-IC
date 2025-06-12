@@ -24,28 +24,78 @@ jobs:
       - name: Ejecutar pruebas
         run: npm test
 
-      - name: Enviar Notificación a Slack (Despliegue Exitoso)
+      - name: Enviar Notificación a Slack (Entrega Continua Exitosa)
         if: success()
         uses: slackapi/slack-github-action@v1.23.0
         with:
           payload: |
             {
-              "text": "🚀 Desplegado exitosamente en Render.",
+              "text": "✅ *Entrega exitosa*",
+              "attachments": [
+                {
+                  "color": "#2eb886",
+                  "fields": [
+                    {
+                      "title": "Autor del merge",
+                      "value": "${{ github.actor }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Rama integrada",
+                      "value": "${{ github.ref_name }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Mensaje",
+                      "value": "El código fue entregado correctamente y está listo para el despliegue en producción."
+                    },
+                    {
+                      "title": "Ver Commit",
+                      "value": "<https://github.com/${{ github.repository }}/commit/${{ github.sha }}|Click aquí para ver el commit>"
+                    }
+                  ]
+                }
+              ],
               "username": "GitHub Actions CD",
-              "channel": "#general-parcial-ic"
+              "channel": "#notificaciones-despliegue"
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_3 }}
 
-      - name: Enviar Notificación a Slack (Fallo de Despliegue)
+      - name: Enviar Notificación a Slack (Fallo de Entrega Continua)
         if: failure()
         uses: slackapi/slack-github-action@v1.23.0
         with:
           payload: |
             {
-              "text": "🚨 Fallo en el despliegue a producción. Ver logs de GitHub Actions.",
+              "text": "❌ *Fallo en la entrega*",
+              "attachments": [
+                {
+                  "color": "#e01e5a",
+                  "fields": [
+                    {
+                      "title": "Autor del merge",
+                      "value": "${{ github.actor }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Rama integrada",
+                      "value": "${{ github.ref_name }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Mensaje",
+                      "value": "Ocurrió un error en el proceso de entrega continua. Ver logs en GitHub Actions."
+                    },
+                    {
+                      "title": "Ver Commit",
+                      "value": "<https://github.com/${{ github.repository }}/commit/${{ github.sha }}|Click aquí para ver el commit>"
+                    }
+                  ]
+                }
+              ],
               "username": "GitHub Actions CD",
-              "channel": "#general-parcial-ic"
+              "channel": "#notificaciones-despliegue"
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_3 }}
