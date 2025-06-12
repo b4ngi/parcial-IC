@@ -18,6 +18,14 @@ jobs:
         with:
           node-version: 20
 
+      - name: Cachear dependencias de npm
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
       - name: Instalar dependencias
         run: npm ci
 
@@ -30,7 +38,7 @@ jobs:
         with:
           payload: |
             {
-              "✅ Los Tests para la rama `${{ github.ref_name }}` han PASADO exitosamente.\n\n*Autor del commit:* ${{ github.actor }}\n*Commit:* <https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>\n*Ver ejecución:* <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|GitHub Actions>",
+              "text": "✅ Los Tests para la rama `${{ github.ref_name }}` han PASADO exitosamente.\n\n*Autor del commit:* ${{ github.actor }}\n*Commit:* <https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>\n*Ver ejecución:* <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|GitHub Actions>",
               "username": "GitHub Actions CI",
               "channel": "#general-parcial-ic"
             }
@@ -43,7 +51,7 @@ jobs:
         with:
           payload: |
             {
-              "❌ Los Tests para la rama `${{ github.ref_name }}` han FALLADO.\n\n*Autor del commit:* ${{ github.actor }}\n*Commit:* <https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>\n*Ver ejecución:* <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|GitHub Actions>",
+              "text": "❌ Los Tests para la rama `${{ github.ref_name }}` han FALLADO.\n\n*Autor del commit:* ${{ github.actor }}\n*Commit:* <https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>\n*Ver ejecución:* <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|GitHub Actions>",
               "username": "GitHub Actions CI",
               "channel": "#general-parcial-ic"
             }
