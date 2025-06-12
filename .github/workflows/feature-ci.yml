@@ -24,23 +24,28 @@ jobs:
       - name: Ejecutar pruebas
         run: npm test
 
-      - name: Notificacion Slack
-        if: always()
-        uses: rtCamp/action-slack-notify@v2
+      - name: Enviar Retroalimentación a Slack (Éxito)More actions
+        if: success()
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+          payload: |
+            {
+              "✅ Los Tests para la rama `${{ github.ref_name }}` han PASADO exitosamente.\n\n*Autor del commit:* ${{ github.actor }}\n*Commit:* <https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>\n*Ver ejecución:* <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|GitHub Actions>",
+              "username": "GitHub Actions CI",
+              "channel": "#general-parcial-ic"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_1 }}Add commentMore actions
+
+      - name: Enviar Retroalimentación a Slack (Fallo)
+        if: failure()
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+          payload: |
+            {
+              "❌ Los Tests para la rama `${{ github.ref_name }}` han FALLADO.\n\n*Autor del commit:* ${{ github.actor }}\n*Commit:* <https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>\n*Ver ejecución:* <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|GitHub Actions>",
+              "username": "GitHub Actions CI",
+              "channel": "#general-parcial-ic"
+            }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_1 }}
-          SLACK_CHANNEL: notificaciones-features
-          SLACK_COLOR: ${{ job.status }}
-          MSG_MINIMAL: actions url
-
-          SLACK_MESSAGE: |
-            *${{ job.status == 'success' && ':white_check_mark: Tests pasaron exitosamente' || ':x: Tests fallaron' }} en `${{ github.ref_name }}`*
-
-            *Autor:* `${{ github.actor }}`
-            *Commit:* <https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>
-            *Workflow:* `${{ github.workflow }}`
-            *Ver ejecución:* <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Ver en GitHub Actions>
-
-          SLACK_MESSAGE_ON_SUCCESS: ''
-          SLACK_MESSAGE_ON_FAILURE: ''
-          SLACK_MESSAGE_ON_CANCEL: 'Job cancelado :warning:'
