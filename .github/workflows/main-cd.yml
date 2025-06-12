@@ -19,10 +19,7 @@ jobs:
           node-version: 20
 
       - name: Instalar dependencias
-        run: npm install
-
-      - name: Preparar Build de Producción
-        run: npm run build
+        run: npm ci
 
       - name: Ejecutar pruebas
         run: npm test
@@ -38,7 +35,7 @@ jobs:
               "channel": "#general-parcial-ic"
             }
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_3 }}
 
       - name: Enviar Notificación a Slack (Fallo de Despliegue)
         if: failure()
@@ -51,4 +48,4 @@ jobs:
               "channel": "#general-parcial-ic"
             }
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_3 }}

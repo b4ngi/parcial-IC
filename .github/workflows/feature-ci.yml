@@ -19,7 +19,7 @@ jobs:
           node-version: 20
 
       - name: Instalar dependencias
-        run: npm install
+        run: npm ci
 
       - name: Ejecutar pruebas
         run: npm test
@@ -35,7 +35,7 @@ jobs:
               "channel": "#general-parcial-ic"
             }
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_1 }}
 
       - name: Enviar Retroalimentación a Slack (Fallo)
         if: failure()
@@ -48,4 +48,4 @@ jobs:
               "channel": "#general-parcial-ic"
             }
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_1 }}
