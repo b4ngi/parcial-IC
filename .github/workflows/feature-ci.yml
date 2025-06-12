@@ -24,7 +24,7 @@ jobs:
       - name: Ejecutar pruebas
         run: npm test
 
-      - name: Enviar Retroalimentación a Slack (Éxito)More actions
+      - name: Enviar Retroalimentación a Slack (Éxito)
         if: success()
         uses: slackapi/slack-github-action@v1.23.0
         with:
@@ -35,7 +35,7 @@ jobs:
               "channel": "#general-parcial-ic"
             }
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_1 }}Add commentMore actions
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_1 }}
 
       - name: Enviar Retroalimentación a Slack (Fallo)
         if: failure()
