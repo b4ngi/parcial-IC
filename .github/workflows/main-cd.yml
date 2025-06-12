@@ -24,6 +24,12 @@ jobs:
       - name: Ejecutar pruebas
         run: npm test
 
+      - name: Deploy to Render
+        if: success()
+        run: |
+          curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK }}
+          echo "Deploy activado en Render."
+
       - name: Enviar Notificación a Slack (Entrega Continua Exitosa)
         if: success()
         uses: slackapi/slack-github-action@v1.23.0
