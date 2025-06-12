@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout del codigo
@@ -21,14 +21,6 @@ jobs:
       - name: Instalar dependencias
         run: npm ci
 
-      - name: Cachear dependencias de npm
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
       - name: Ejecutar pruebas
         run: npm test
 
@@ -38,7 +30,7 @@ jobs:
         with:
           payload: |
             {
-              "text": "🚀 Despliegue exitoso listo para Render desde la rama `${{ github.ref_name }}`.\n\n*Autor del commit:* ${{ github.actor }}\n*Commit:* <https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>\n*Ver ejecución:* <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|GitHub Actions>",
+              "text": "🚀 Entrega continua completada, listo para desplegar en Render desde la rama `${{ github.ref_name }}`.\n\n*Autor del commit:* ${{ github.actor }}\n*Commit:* <https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>\n*Ver ejecución:* <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|GitHub Actions>",
               "username": "GitHub Actions CD",
               "channel": "#notificaciones-despliegue"
             }
